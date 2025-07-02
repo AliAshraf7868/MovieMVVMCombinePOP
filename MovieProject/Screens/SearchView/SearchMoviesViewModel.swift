@@ -8,6 +8,9 @@
 import Combine
 import Foundation
 
+import Combine
+import SwiftUI
+
 final class SearchMoviesViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var searchResults: [MovieModel] = []
@@ -16,12 +19,12 @@ final class SearchMoviesViewModel: ObservableObject {
     @Published var error: String?
     @Published var savedMovieIDs: Set<Int> = []
 
-    private let api: MoviesAPI
-    private let recentRepo: RecentSearchRepository
+    private let api: MovieAPIProtocol
+    private let recentRepo: RecentSearchRepositoryProtocol
     private let movieRepo: MovieRepositoryProtocol
     private var cancellables = Set<AnyCancellable>()
 
-    init(api: MoviesAPI, recentRepo: RecentSearchRepository, movieRepo: MovieRepositoryProtocol) {
+    init(api: MovieAPIProtocol, recentRepo: RecentSearchRepositoryProtocol, movieRepo: MovieRepositoryProtocol) {
         self.api = api
         self.recentRepo = recentRepo
         self.movieRepo = movieRepo
@@ -44,7 +47,7 @@ final class SearchMoviesViewModel: ObservableObject {
     }
 
     func loadRecentSearches() {
-        recentSearches = recentRepo.getRecentSearches()
+        recentSearches = recentRepo.getRecentSearches(limit: 10)
     }
     
     func deleteRecent(at offsets: IndexSet) {
@@ -94,12 +97,14 @@ final class SearchMoviesViewModel: ObservableObject {
 
         api.searchMovies(query: query)
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
+                guard let self else { return }
                 self.isLoading = false
                 if case let .failure(err) = completion {
                     self.error = err.localizedDescription
                 }
-            }, receiveValue: { response in
+            }, receiveValue: { [weak self] response in
+                guard let self else { return }
                 self.searchResults = response.results
                 if saveToRecent {
                     self.recentRepo.saveSearch(query: query)

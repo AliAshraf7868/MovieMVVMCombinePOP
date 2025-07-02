@@ -10,9 +10,12 @@ import SDWebImageSwiftUI
 
 struct MovieDetailView<Presenter: MovieDetailPresentable>: View {
     let presenter: Presenter
+    let isSaved: Bool
+    let onSaveTapped: () -> Void
+
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading) {
                 if let url = presenter.posterURL {
                     WebImage(url: url)
                         .resizable()
@@ -42,8 +45,17 @@ struct MovieDetailView<Presenter: MovieDetailPresentable>: View {
             .padding()
         }
         .navigationTitle("Movie Details")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: onSaveTapped) {
+                    Image(systemName: isSaved ? "bookmark.fill" : "bookmark")
+                        .foregroundColor(.blue)
+                }
+            }
+        }
     }
 }
+
 #Preview {
     let movie = MovieModel(
         id: 1,
@@ -56,5 +68,56 @@ struct MovieDetailView<Presenter: MovieDetailPresentable>: View {
         genreIDs: nil, popularity: nil, voteAverage: 8.3, voteCount: nil, adult: nil, originalLanguage: nil, video: true
     )
     let presenter = MovieDetailPresenter(movie: movie)
-    MovieDetailView(presenter: presenter)
+    MovieDetailView(presenter: presenter,isSaved: true,
+                    onSaveTapped: { print("Toggle save tapped") })
 }
+
+//struct MovieDetailView: View {
+//    @StateObject var viewModel: MovieDetailViewModel
+//
+//    var body: some View {
+//        let presenter = viewModel.presenter
+//
+//        ScrollView {
+//            VStack(alignment: .leading) {
+//                if let url = presenter.posterURL {
+//                    WebImage(url: url)
+//                        .resizable()
+//                        .scaledToFit()
+//                        .cornerRadius(12)
+//                        .shadow(radius: 8)
+//                        .frame(maxWidth: .infinity)
+//                        .frame(height: UIScreen.main.bounds.height / 1.8)
+//                }
+//
+//                Text(presenter.title)
+//                    .font(.title)
+//                    .bold()
+//
+//                Text(presenter.releaseDate)
+//                    .font(.subheadline)
+//                    .foregroundColor(.secondary)
+//
+//                Text(presenter.voteAverage)
+//                    .font(.subheadline)
+//                    .foregroundColor(.secondary)
+//
+//                Text(presenter.overview)
+//                    .font(.body)
+//                    .padding(.top, 8)
+//            }
+//            .padding()
+//        }
+//        .navigationTitle("Movie Details")
+//        .toolbar {
+//            ToolbarItem(placement: .navigationBarTrailing) {
+//                Button(action: {
+//                    viewModel.toggleSave()
+//                }) {
+//                    Image(systemName: viewModel.isSaved ? "bookmark.fill" : "bookmark")
+//                        .foregroundColor(.blue)
+//                }
+//            }
+//        }
+//    }
+//}

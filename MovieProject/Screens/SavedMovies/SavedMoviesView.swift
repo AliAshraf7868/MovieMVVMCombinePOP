@@ -28,9 +28,15 @@ struct SavedMoviesView: View {
                 } else {
                     LazyVGrid(columns: columns, spacing: 16) {
                         ForEach(viewModel.savedMovies) { movie in
-                            NavigationLink {
-                                MovieDetailView(presenter: MovieDetailPresenter(movie: movie))
-                            } label: {
+                            NavigationLink(destination:
+                                MovieDetailView(
+                                    presenter: MovieDetailPresenter(movie: movie),
+                                    isSaved: viewModel.isMovieSaved(movie),
+                                    onSaveTapped: {
+                                        viewModel.toggleSave(movie: movie)
+                                    }
+                                )
+                            ) {
                                 MoviePosterView(
                                     movie: movie,
                                     isSaved: viewModel.isMovieSaved(movie),

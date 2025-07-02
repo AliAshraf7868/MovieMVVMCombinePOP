@@ -10,12 +10,13 @@ import SDWebImageSwiftUI
 
 struct SearchMoviesView: View {
     @StateObject private var viewModel: SearchMoviesViewModel
+    
     let columns = [
         GridItem(.flexible(), spacing: 12),
         GridItem(.flexible(), spacing: 12)
     ]
 
-    init(api: MoviesAPI, recentRepo: RecentSearchRepository, movieRepo: MovieRepositoryProtocol) {
+    init(api: MoviesAPI, recentRepo: RecentSearchRepositoryProtocol, movieRepo: MovieRepositoryProtocol) {
         _viewModel = StateObject(wrappedValue: SearchMoviesViewModel(
             api: api, recentRepo: recentRepo, movieRepo: movieRepo
         ))
@@ -59,6 +60,7 @@ struct SearchMoviesView: View {
                         }
                     }
                     .listStyle(PlainListStyle())
+                    .padding()
                 } else if viewModel.isLoading {
                     Spacer()
                     ProgressView("Searching...")
@@ -67,13 +69,23 @@ struct SearchMoviesView: View {
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(viewModel.searchResults) { movie in
-                                MoviePosterView(
-                                    movie: movie,
-                                    isSaved: viewModel.isMovieSaved(movie),
-                                    onSaveTapped: {
-                                        viewModel.toggleSave(movie: movie)
-                                    }
-                                )
+                                NavigationLink(destination:
+                                    MovieDetailView(
+                                        presenter: MovieDetailPresenter(movie: movie),
+                                        isSaved: viewModel.isMovieSaved(movie),
+                                        onSaveTapped: {
+                                            viewModel.toggleSave(movie: movie)
+                                        }
+                                    )
+                                ) {
+                                    MoviePosterView(
+                                        movie: movie,
+                                        isSaved: viewModel.isMovieSaved(movie),
+                                        onSaveTapped: {
+                                            viewModel.toggleSave(movie: movie)
+                                        }
+                                    )
+                                }
                             }
                         }
                         .padding()
@@ -90,7 +102,7 @@ struct SearchMoviesView: View {
 
 #Preview {
     let api = MoviesAPI(client: APIClient())
-    let repository = RecentSearchRepository()
+    let repository = RecentSearchCoreDataRepository()
     SearchMoviesView(api: api, recentRepo: repository, movieRepo: MovieRepository(local: MovieCoreDataDataSource(context: PersistenceController.shared.container.viewContext)))
 }
 

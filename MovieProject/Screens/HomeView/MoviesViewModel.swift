@@ -16,13 +16,14 @@ final class MoviesViewModel: ObservableObject {
     @Published var error: String?
     @Published var isSaved: Bool = false
     
-    private let api: MoviesAPI
+    private let api: MovieAPIProtocol
     private var cancellables = Set<AnyCancellable>()
     private var currentPage = 1
+    private var totalResults = 20
     private var canLoadMorePages = true
     private let repository: MovieRepositoryProtocol
     
-    init(api: MoviesAPI, repository: MovieRepositoryProtocol) {
+    init(api: MovieAPIProtocol, repository: MovieRepositoryProtocol) {
         self.api = api
         self.repository = repository
     }
@@ -44,15 +45,7 @@ final class MoviesViewModel: ObservableObject {
         
         api.fetchMovies(page: currentPage)
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                self.isLoading = false
-                if case let .failure(apiError) = completion {
-                    self.error = apiError.localizedDescription
-                }
-            }, receiveValue: { response in
-                self.movies = response.results
-                self.canLoadMorePages = self.currentPage < response.totalPages ?? 10
-            })
+            .sink(receiveCompletion: handleCompletion(_:), receiveValue: handleResponse(_:))
             .store(in: &cancellables)
     }
     
@@ -68,7 +61,7 @@ final class MoviesViewModel: ObservableObject {
     private func loadMoreMovies() {
         isLoadingMore = true
         currentPage += 1
-        
+        totalResults += 20
         api.fetchMovies(page: currentPage)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
@@ -78,10 +71,23 @@ final class MoviesViewModel: ObservableObject {
                 }
             }, receiveValue: { response in
                 self.movies.append(contentsOf: response.results)
-                self.canLoadMorePages = self.currentPage < response.totalPages ?? 10
+                self.canLoadMorePages = self.currentPage < response.totalPages ?? 10 && self.totalResults < response.totalResults ?? 100
             })
             .store(in: &cancellables)
     }
+    
+    private func handleCompletion(_ completion: Subscribers.Completion<APIError>) {
+        self.isLoading = false
+        if case let .failure(error) = completion {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func handleResponse(_ response: MovieResponse) {
+        self.movies = response.results
+        self.canLoadMorePages = self.currentPage < response.totalPages ?? 10
+    }
+
     
 }
 

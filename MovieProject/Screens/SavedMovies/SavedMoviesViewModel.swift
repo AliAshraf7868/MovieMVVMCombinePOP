@@ -25,7 +25,7 @@ final class SavedMoviesViewModel: ObservableObject {
 
     func toggleSave(movie: MovieModel) {
         movieRepo.toggleSave(movie: movie)
-        loadSavedMovies() // reload after toggle
+        loadSavedMovies()
     }
 
     func isMovieSaved(_ movie: MovieModel) -> Bool {

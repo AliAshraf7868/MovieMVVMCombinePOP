@@ -8,7 +8,12 @@
 import Foundation
 import Combine
 
-final class MoviesAPI {
+protocol MovieAPIProtocol {
+    func fetchMovies(page: Int) -> AnyPublisher<MovieResponse, APIError>
+    func searchMovies(query: String) -> AnyPublisher<MovieResponse, APIError>
+}
+
+final class MoviesAPI: MovieAPIProtocol {
     private let client: APIRequestable
 
     init(client: APIRequestable) {

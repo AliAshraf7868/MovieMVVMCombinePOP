@@ -40,13 +40,24 @@ struct MoviesHomeView: View {
                 } else {
                     LazyVGrid(columns: columns, spacing: 16) {
                         ForEach(viewModel.movies) { movie in
-                            MoviePosterView(
-                                movie: movie,
-                                isSaved: viewModel.isMovieSaved(movie.id),
-                                onSaveTapped: {
-                                    viewModel.toggleSave(movie: movie)
-                                }
-                            )
+                            NavigationLink(destination:
+                                MovieDetailView(
+                                    presenter: MovieDetailPresenter(movie: movie),
+                                    isSaved: viewModel.isMovieSaved(movie.id),
+                                    onSaveTapped: {
+                                        viewModel.toggleSave(movie: movie)
+                                    }
+                                )
+                            ) {
+                                MoviePosterView(
+                                    movie: movie,
+                                    isSaved: viewModel.isMovieSaved(movie.id),
+                                    onSaveTapped: {
+                                        viewModel.toggleSave(movie: movie)
+                                    }
+                                )
+                            }
+
                             .onAppear {
                                 viewModel.loadMoreMoviesIfNeeded(currentMovie: movie)
                             }
@@ -55,6 +66,8 @@ struct MoviesHomeView: View {
                     }
                     
                     .navigationTitle("Popular Movies")
+                    .navigationBarTitleDisplayMode(.automatic)
+                    
                 }
             }
         }

@@ -11,7 +11,7 @@ import CoreData
 struct ContentView: View {
     private let api = MoviesAPI(client: APIClient())
     private let movieRepo = MovieRepository(local: MovieCoreDataDataSource(context: PersistenceController.shared.container.viewContext))
-    private let recentRepo = RecentSearchRepository()
+    private let recentRepo = RecentSearchCoreDataRepository()
 
     var body: some View {
         TabView {
