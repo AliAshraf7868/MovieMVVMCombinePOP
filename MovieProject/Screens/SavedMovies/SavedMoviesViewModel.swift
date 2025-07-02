@@ -12,7 +12,7 @@ final class SavedMoviesViewModel: ObservableObject {
     
     @Published var savedMovies: [MovieModel] = []
 
-    private let movieRepo: MovieRepositoryProtocol
+    let movieRepo: MovieRepositoryProtocol
 
     init(movieRepo: MovieRepositoryProtocol) {
         self.movieRepo = movieRepo

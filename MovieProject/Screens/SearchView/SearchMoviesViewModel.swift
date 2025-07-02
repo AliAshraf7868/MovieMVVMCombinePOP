@@ -21,7 +21,7 @@ final class SearchMoviesViewModel: ObservableObject {
 
     private let api: MovieAPIProtocol
     private let recentRepo: RecentSearchRepositoryProtocol
-    private let movieRepo: MovieRepositoryProtocol
+    let movieRepo: MovieRepositoryProtocol
     private var cancellables = Set<AnyCancellable>()
 
     init(api: MovieAPIProtocol, recentRepo: RecentSearchRepositoryProtocol, movieRepo: MovieRepositoryProtocol) {

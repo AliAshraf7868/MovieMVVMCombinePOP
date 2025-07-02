@@ -8,12 +8,15 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct MovieDetailView<Presenter: MovieDetailPresentable>: View {
-    let presenter: Presenter
-    let isSaved: Bool
-    let onSaveTapped: () -> Void
+import SwiftUI
+import SDWebImageSwiftUI
+
+struct MovieDetailView: View {
+    @StateObject var viewModel: MovieDetailViewModel
 
     var body: some View {
+        let presenter = viewModel.presenter
+
         ScrollView {
             VStack(alignment: .leading) {
                 if let url = presenter.posterURL {
@@ -47,8 +50,10 @@ struct MovieDetailView<Presenter: MovieDetailPresentable>: View {
         .navigationTitle("Movie Details")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: onSaveTapped) {
-                    Image(systemName: isSaved ? "bookmark.fill" : "bookmark")
+                Button(action: {
+                    viewModel.toggleSave()
+                }) {
+                    Image(systemName: viewModel.isSaved ? "bookmark.fill" : "bookmark")
                         .foregroundColor(.blue)
                 }
             }
@@ -67,57 +72,6 @@ struct MovieDetailView<Presenter: MovieDetailPresentable>: View {
         backdropPath: "/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg",
         genreIDs: nil, popularity: nil, voteAverage: 8.3, voteCount: nil, adult: nil, originalLanguage: nil, video: true
     )
-    let presenter = MovieDetailPresenter(movie: movie)
-    MovieDetailView(presenter: presenter,isSaved: true,
-                    onSaveTapped: { print("Toggle save tapped") })
+    let repository = MovieRepository(local: MovieCoreDataDataSource(context: PersistenceController.shared.container.viewContext))
+    MovieDetailView(viewModel: MovieDetailViewModel(movie: movie, repository: repository))
 }
-
-//struct MovieDetailView: View {
-//    @StateObject var viewModel: MovieDetailViewModel
-//
-//    var body: some View {
-//        let presenter = viewModel.presenter
-//
-//        ScrollView {
-//            VStack(alignment: .leading) {
-//                if let url = presenter.posterURL {
-//                    WebImage(url: url)
-//                        .resizable()
-//                        .scaledToFit()
-//                        .cornerRadius(12)
-//                        .shadow(radius: 8)
-//                        .frame(maxWidth: .infinity)
-//                        .frame(height: UIScreen.main.bounds.height / 1.8)
-//                }
-//
-//                Text(presenter.title)
-//                    .font(.title)
-//                    .bold()
-//
-//                Text(presenter.releaseDate)
-//                    .font(.subheadline)
-//                    .foregroundColor(.secondary)
-//
-//                Text(presenter.voteAverage)
-//                    .font(.subheadline)
-//                    .foregroundColor(.secondary)
-//
-//                Text(presenter.overview)
-//                    .font(.body)
-//                    .padding(.top, 8)
-//            }
-//            .padding()
-//        }
-//        .navigationTitle("Movie Details")
-//        .toolbar {
-//            ToolbarItem(placement: .navigationBarTrailing) {
-//                Button(action: {
-//                    viewModel.toggleSave()
-//                }) {
-//                    Image(systemName: viewModel.isSaved ? "bookmark.fill" : "bookmark")
-//                        .foregroundColor(.blue)
-//                }
-//            }
-//        }
-//    }
-//}

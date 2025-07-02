@@ -70,13 +70,12 @@ struct SearchMoviesView: View {
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(viewModel.searchResults) { movie in
                                 NavigationLink(destination:
-                                    MovieDetailView(
-                                        presenter: MovieDetailPresenter(movie: movie),
-                                        isSaved: viewModel.isMovieSaved(movie),
-                                        onSaveTapped: {
-                                            viewModel.toggleSave(movie: movie)
-                                        }
-                                    )
+                                                MovieDetailView(
+                                                    viewModel: MovieDetailViewModel(
+                                                        movie: movie,
+                                                        repository: viewModel.movieRepo
+                                                    )
+                                                )
                                 ) {
                                     MoviePosterView(
                                         movie: movie,

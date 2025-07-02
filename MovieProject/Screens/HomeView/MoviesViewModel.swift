@@ -21,7 +21,7 @@ final class MoviesViewModel: ObservableObject {
     private var currentPage = 1
     private var totalResults = 20
     private var canLoadMorePages = true
-    private let repository: MovieRepositoryProtocol
+    let repository: MovieRepositoryProtocol
     
     init(api: MovieAPIProtocol, repository: MovieRepositoryProtocol) {
         self.api = api

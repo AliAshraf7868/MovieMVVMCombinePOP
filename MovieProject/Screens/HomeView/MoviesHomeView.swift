@@ -41,13 +41,12 @@ struct MoviesHomeView: View {
                     LazyVGrid(columns: columns, spacing: 16) {
                         ForEach(viewModel.movies) { movie in
                             NavigationLink(destination:
-                                MovieDetailView(
-                                    presenter: MovieDetailPresenter(movie: movie),
-                                    isSaved: viewModel.isMovieSaved(movie.id),
-                                    onSaveTapped: {
-                                        viewModel.toggleSave(movie: movie)
-                                    }
-                                )
+                                            MovieDetailView(
+                                                viewModel: MovieDetailViewModel(
+                                                    movie: movie,
+                                                    repository: viewModel.repository
+                                                )
+                                            )
                             ) {
                                 MoviePosterView(
                                     movie: movie,
@@ -57,7 +56,7 @@ struct MoviesHomeView: View {
                                     }
                                 )
                             }
-
+                            
                             .onAppear {
                                 viewModel.loadMoreMoviesIfNeeded(currentMovie: movie)
                             }

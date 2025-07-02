@@ -9,12 +9,12 @@ import SwiftUI
 
 struct SavedMoviesView: View {
     @StateObject var viewModel: SavedMoviesViewModel
-
+    
     let columns = [
         GridItem(.flexible(), spacing: 12),
         GridItem(.flexible(), spacing: 12)
     ]
-
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -29,13 +29,12 @@ struct SavedMoviesView: View {
                     LazyVGrid(columns: columns, spacing: 16) {
                         ForEach(viewModel.savedMovies) { movie in
                             NavigationLink(destination:
-                                MovieDetailView(
-                                    presenter: MovieDetailPresenter(movie: movie),
-                                    isSaved: viewModel.isMovieSaved(movie),
-                                    onSaveTapped: {
-                                        viewModel.toggleSave(movie: movie)
-                                    }
-                                )
+                                            MovieDetailView(
+                                                viewModel: MovieDetailViewModel(
+                                                    movie: movie,
+                                                    repository: viewModel.movieRepo
+                                                )
+                                            )
                             ) {
                                 MoviePosterView(
                                     movie: movie,
@@ -45,7 +44,7 @@ struct SavedMoviesView: View {
                                     }
                                 )
                             }
-
+                            
                             
                         }
                     }
