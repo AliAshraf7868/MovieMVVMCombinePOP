@@ -8,9 +8,6 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-import SwiftUI
-import SDWebImageSwiftUI
-
 struct MovieDetailView: View {
     @StateObject var viewModel: MovieDetailViewModel
 
