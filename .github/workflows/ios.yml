@@ -1,3 +1,22 @@
-git add .
-git commit -m "Add CI workflow"
-git push
+name: iOS CI
+
+on:
+  push:
+    branches: [ main, MovieDetailRefactor ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Build app
+        run: xcodebuild clean build \
+          -scheme MovieProject \
+          -destination 'platform=iOS Simulator,name=iPhone 15'
