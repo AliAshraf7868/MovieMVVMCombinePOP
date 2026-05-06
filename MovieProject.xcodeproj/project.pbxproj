@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,26 +34,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		6D70F04C2E12641200B35642 /* MovieProject */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MovieProject;
-			sourceTree = "<group>";
-		};
-		6D70F05F2E12641400B35642 /* MovieProjectTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MovieProjectTests;
-			sourceTree = "<group>";
-		};
-		6D70F0692E12641400B35642 /* MovieProjectUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MovieProjectUITests;
-			sourceTree = "<group>";
-		};
-		6D70F0942E1275A600B35642 /* CodeData */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CodeData;
-			sourceTree = "<group>";
-		};
+		6D70F04C2E12641200B35642 /* MovieProject */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MovieProject; sourceTree = "<group>"; };
+		6D70F05F2E12641400B35642 /* MovieProjectTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MovieProjectTests; sourceTree = "<group>"; };
+		6D70F0692E12641400B35642 /* MovieProjectUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MovieProjectUITests; sourceTree = "<group>"; };
+		6D70F0942E1275A600B35642 /* CodeData */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CodeData; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +184,7 @@
 				};
 			};
 			buildConfigurationList = 6D70F0452E12641200B35642 /* Build configuration list for PBXProject "MovieProject" */;
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -211,7 +196,6 @@
 			packageReferences = (
 				6D70F11B2E12C45900B35642 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 6D70F04B2E12641200B35642 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
