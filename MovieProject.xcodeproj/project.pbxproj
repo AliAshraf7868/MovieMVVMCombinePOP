@@ -184,7 +184,7 @@
 				};
 			};
 			buildConfigurationList = 6D70F0452E12641200B35642 /* Build configuration list for PBXProject "MovieProject" */;
-			compatibilityVersion = "Xcode 15.3";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
