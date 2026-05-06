@@ -3,7 +3,6 @@ name: iOS CI
 on:
   push:
     branches: [ main, MovieDetailRefactor ]
-  pull_request:
 
 jobs:
   build:
@@ -13,10 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Show Xcode version
-        run: xcodebuild -version
-
       - name: Build app
-        run: xcodebuild clean build \
+        run: |
+          xcodebuild clean build \
+          -project MovieProject.xcodeproj \
           -scheme MovieProject \
           -destination 'platform=iOS Simulator,name=iPhone 15'
