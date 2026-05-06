@@ -12,4 +12,5 @@ protocol MovieRepositoryProtocol {
     func getSavedMovies() -> [MovieModel]
     func toggleSave(movie: MovieModel)
     func isMovieSaved(id: Int) -> Bool
+    func totalMovies() -> Int
 }

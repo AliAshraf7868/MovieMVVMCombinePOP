@@ -17,14 +17,9 @@ struct MoviePosterView: View {
         ZStack(alignment: .topTrailing) {
             ZStack(alignment: .bottomLeading) {
                 
-                Image("Default")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 250)
-                    .clipped()
-                    .cornerRadius(10)
+                DefaultImageView()
                 
-                WebImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(movie.posterPath ?? "")"))
+                WebImage(url: URL(string: "\(API.imageBaseURL)\(movie.posterPath ?? "")"))
                     .resizable()
                     .indicator(.activity)
                     .scaledToFill()

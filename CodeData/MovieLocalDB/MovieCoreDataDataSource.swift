@@ -51,6 +51,12 @@ class MovieCoreDataDataSource: MovieLocalDataSource {
         return results.map { $0.toMovieModel() }
     }
 
+    func totalMovies() -> Int {
+        let request: NSFetchRequest<MovieEntity> = MovieEntity.fetchRequest()
+        guard let results = try? context.fetch(request) else { return 0 }
+        return results.count
+    }
+    
     func isMovieSaved(id: Int) -> Bool {
         let request: NSFetchRequest<MovieEntity> = MovieEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %d", id)

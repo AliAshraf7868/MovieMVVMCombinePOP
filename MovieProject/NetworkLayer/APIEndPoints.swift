@@ -35,3 +35,18 @@ struct PopularMoviesEndpoint: Endpoint {
     }
     var body: (any Encodable)?
 }
+
+struct UpcomingMoviesEndpoint: Endpoint {
+    
+    let page: Int
+    var path: String = API.upcomingUrl
+    var method: HTTPMethod { .GET }
+    var queryItems: [URLQueryItem] {
+        var items = [URLQueryItem(name: "language", value: "en-US")]
+        if page > 0 {
+            items.append(URLQueryItem(name: "page", value: "\(page)"))
+        }
+        return items
+    }
+    var body: (any Encodable)?
+}

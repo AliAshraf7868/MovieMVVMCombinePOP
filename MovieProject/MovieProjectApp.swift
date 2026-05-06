@@ -13,7 +13,7 @@ struct MovieProjectApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootFlowView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

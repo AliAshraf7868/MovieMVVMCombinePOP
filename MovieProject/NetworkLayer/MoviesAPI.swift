@@ -9,7 +9,8 @@ import Foundation
 import Combine
 
 protocol MovieAPIProtocol {
-    func fetchMovies(page: Int) -> AnyPublisher<MovieResponse, APIError>
+    func fetchPopularMovies(page: Int) -> AnyPublisher<MovieResponse, APIError>
+    func fetchUpcomingMovies(page: Int) -> AnyPublisher<MovieResponse, APIError>
     func searchMovies(query: String) -> AnyPublisher<MovieResponse, APIError>
 }
 
@@ -20,8 +21,12 @@ final class MoviesAPI: MovieAPIProtocol {
         self.client = client
     }
 
-    func fetchMovies(page: Int) -> AnyPublisher<MovieResponse, APIError> {
+    func fetchPopularMovies(page: Int) -> AnyPublisher<MovieResponse, APIError> {
         client.request(PopularMoviesEndpoint(page: page), decodingType: MovieResponse.self)
+    }
+    
+    func fetchUpcomingMovies(page: Int) -> AnyPublisher<MovieResponse, APIError> {
+        client.request(UpcomingMoviesEndpoint(page: page), decodingType: MovieResponse.self)
     }
 
     func searchMovies(query: String) -> AnyPublisher<MovieResponse, APIError> {

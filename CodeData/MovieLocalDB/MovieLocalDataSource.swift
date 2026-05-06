@@ -12,4 +12,5 @@ protocol MovieLocalDataSource {
     func delete(movie: MovieModel)
     func fetchSavedMovies() -> [MovieModel]
     func isMovieSaved(id: Int) -> Bool
+    func totalMovies() -> Int
 }

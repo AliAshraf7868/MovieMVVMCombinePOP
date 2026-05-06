@@ -31,5 +31,9 @@ class MovieRepository: MovieRepositoryProtocol {
     func isMovieSaved(id: Int) -> Bool {
         local.isMovieSaved(id: id)
     }
+    
+    func totalMovies() -> Int {
+        local.totalMovies()
+    }
 }
 

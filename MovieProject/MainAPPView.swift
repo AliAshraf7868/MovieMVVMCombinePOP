@@ -8,14 +8,16 @@
 import SwiftUI
 import CoreData
 
-struct ContentView: View {
+struct MainAPPView: View {
+    var onResetFlow: () -> Void
+
     private let api = MoviesAPI(client: APIClient())
     private let movieRepo = MovieRepository(local: MovieCoreDataDataSource(context: PersistenceController.shared.container.viewContext))
     private let recentRepo = RecentSearchCoreDataRepository()
 
     var body: some View {
         TabView {
-            MoviesHomeView(api: api, repository: movieRepo)
+            MoviesHomeView(api: api, repository: movieRepo, onResetFlow: onResetFlow)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
@@ -29,6 +31,7 @@ struct ContentView: View {
                 .tabItem {
                     Label("Saved", systemImage: "bookmark")
                 }
+                .badge(movieRepo.totalMovies())
         }
     }
 }
@@ -43,5 +46,5 @@ struct ContentView: View {
 //}()
 
 #Preview {
-    ContentView()
+//    MainAPPView()
 }
