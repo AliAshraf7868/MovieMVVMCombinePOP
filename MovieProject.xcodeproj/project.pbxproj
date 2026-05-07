@@ -33,12 +33,12 @@
 		6D70F0662E12641400B35642 /* MovieProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		6D70F04C2E12641200B35642 /* MovieProject */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MovieProject; sourceTree = "<group>"; };
-		6D70F05F2E12641400B35642 /* MovieProjectTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MovieProjectTests; sourceTree = "<group>"; };
-		6D70F0692E12641400B35642 /* MovieProjectUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MovieProjectUITests; sourceTree = "<group>"; };
-		6D70F0942E1275A600B35642 /* CodeData */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CodeData; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
+/* Begin PBXGroup section */
+		6D70F04C2E12641200B35642 /* MovieProject */ = {isa = PBXGroup; explicitFileTypes = {}; explicitFolders = (); path = MovieProject; sourceTree = "<group>"; };
+		6D70F05F2E12641400B35642 /* MovieProjectTests */ = {isa = PBXGroup; explicitFileTypes = {}; explicitFolders = (); path = MovieProjectTests; sourceTree = "<group>"; };
+		6D70F0692E12641400B35642 /* MovieProjectUITests */ = {isa = PBXGroup; explicitFileTypes = {}; explicitFolders = (); path = MovieProjectUITests; sourceTree = "<group>"; };
+		6D70F0942E1275A600B35642 /* CodeData */ = {isa = PBXGroup; explicitFileTypes = {}; explicitFolders = (); path = CodeData; sourceTree = "<group>"; };
+/* End PBXGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6D70F0472E12641200B35642 /* Frameworks */ = {
